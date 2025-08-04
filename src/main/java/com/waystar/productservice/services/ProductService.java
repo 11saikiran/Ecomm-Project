@@ -1,12 +1,13 @@
 package com.waystar.productservice.services;
 
+import com.waystar.productservice.exceptions.ProductNotFoundException;
 import com.waystar.productservice.model.Product;
 import lombok.Data;
 
 import java.util.List;
 
 public interface ProductService {
-    Product getProduct(Long productId);
+    Product getProduct(Long productId) throws ProductNotFoundException;
 
     List<Product> getAllProducts();
 

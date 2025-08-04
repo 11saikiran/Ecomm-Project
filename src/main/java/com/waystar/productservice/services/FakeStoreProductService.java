@@ -1,6 +1,7 @@
 package com.waystar.productservice.services;
 
 import com.waystar.productservice.dtos.FakeStoreProductDto;
+import com.waystar.productservice.exceptions.ProductNotFoundException;
 import com.waystar.productservice.model.Category;
 import com.waystar.productservice.model.Product;
 import lombok.AllArgsConstructor;
@@ -17,14 +18,16 @@ import java.util.List;
 public class FakeStoreProductService implements  ProductService{
     RestTemplate restTemplate;
     @Override
-    public Product getProduct(Long productId) {
+    public Product getProduct(Long productId) throws ProductNotFoundException {
 
         ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity  = restTemplate.getForEntity
                                                             ("https://fakestoreapi.com/products/"+productId,FakeStoreProductDto.class);
         FakeStoreProductDto fakeStoreProductDto = fakeStoreProductDtoResponseEntity.getBody();
- 
+        if (fakeStoreProductDto ==null){
+            throw new ProductNotFoundException("Product does not exist");
+        }
         return  convertFakeStoreProducctDtoToProduct(fakeStoreProductDto);
-
+//          throw new RuntimeException("Not implemented yet");
     }
 
     @Override
