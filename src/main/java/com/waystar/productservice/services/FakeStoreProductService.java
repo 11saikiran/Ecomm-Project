@@ -24,10 +24,10 @@ public class FakeStoreProductService implements  ProductService{
                                                             ("https://fakestoreapi.com/products/"+productId,FakeStoreProductDto.class);
         FakeStoreProductDto fakeStoreProductDto = fakeStoreProductDtoResponseEntity.getBody();
         if (fakeStoreProductDto ==null){
-            throw new ProductNotFoundException("Product does not exist");
+            throw new ProductNotFoundException(productId, "Product with ID " + productId + " not found");
         }
-        return  convertFakeStoreProducctDtoToProduct(fakeStoreProductDto);
-//          throw new RuntimeException("Not implemented yet");
+          return convertFakeStoreProducctDtoToProduct(fakeStoreProductDto);
+
     }
 
     @Override

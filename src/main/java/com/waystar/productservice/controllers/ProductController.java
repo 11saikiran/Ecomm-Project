@@ -1,6 +1,7 @@
 package com.waystar.productservice.controllers;
 
 
+import com.waystar.productservice.exceptions.CategoryNotFoundException;
 import com.waystar.productservice.exceptions.ProductNotFoundException;
 import com.waystar.productservice.model.Product;
 import com.waystar.productservice.services.ProductService;
@@ -16,9 +17,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
+    private final SelfProductService selfProductService;
     ProductService productService;
-    public ProductController(@Qualifier("SelfProductService") ProductService productService){
+    public ProductController(@Qualifier("selfProductService") ProductService productService, SelfProductService selfProductService){
         this.productService = productService;
+        this.selfProductService = selfProductService;
     }
 
     @GetMapping("/{id}")
@@ -35,8 +38,8 @@ public class ProductController {
 
     }
     @PostMapping("/create")
-    public  Product createProduct(@RequestBody Product product) {
-        return  new Product();
+    public  Product createProduct(@RequestBody Product product) throws CategoryNotFoundException {
+        return  selfProductService.createProduct(product);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long productId){

@@ -1,5 +1,6 @@
 package com.waystar.productservice.services;
 
+import com.waystar.productservice.exceptions.CategoryNotFoundException;
 import com.waystar.productservice.exceptions.ProductNotFoundException;
 import com.waystar.productservice.model.Product;
 import lombok.Data;
@@ -11,7 +12,7 @@ public interface ProductService {
 
     List<Product> getAllProducts();
 
-    Product createProduct(Product product);
+    Product createProduct(Product product) throws CategoryNotFoundException;
 
     void deleteProduct(Long ProductId);
 }
